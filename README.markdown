@@ -8,18 +8,22 @@ While Chrome offers built-in automatic updates, Chromium.app strangely doesn't: 
 Installation
 ------------
 
-1. the download way
+I suggest installation to be done in user's `~/bin` directory.
 
     $ cd ~/bin
+
+### The *download* way
+    
     $ curl -O http://gist.github.com/gists/304554/download
     $ tar xvzf download
     $ mv gist304554-*/getchromium.sh .
-    $ chmod +x getchromium.sh
 
-2. The git way 
+### The *git* way 
 
-    $ cd ~/bin
     $ git clone git://gist.github.com/304554.git .
+
+Last, don't forget to add the execution bit to the script:
+
     $ chmod +x getchromium.sh
 
 Usage
@@ -29,9 +33,11 @@ Run it that way:
 
     $ ./getchromium.sh
 
+**CAUTION**: The script will replace your previous installation of `Chromium.app`. Make backups if you're paranoid. Anyway, your profile will ever be safe because it's stored elsewhere on the system.
+
 Notes
 -----
 
-*Use with CAUTION*, quick and dirty homemade script. At least, works on my box.
+**Warning**: quick and dirty homemade script. At least, works on my box =)
 
 The script is intented and only intended to be used on Mac OS X Snow Leopard (10.6.x) but might be ported to other \*n*x OSes. Feel free to send any patch or pull request if you want to contribute enhancements.
