@@ -61,3 +61,6 @@ rm $TMP/chromium-$LATEST_VERSION.zip
 
 # Updating log
 echo $LATEST_VERSION > $TMP/current-chromium-version
+
+# Open Chromium
+open $INSTALL_DIR/Chromium.app
