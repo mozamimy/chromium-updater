@@ -8,7 +8,7 @@ While Chrome offers built-in automatic updates, Chromium.app strangely doesn't: 
 Installation
 ------------
 
-I suggest installation to be done in user's `/usr/local` directory.
+I suggest installation to be done in `/usr/local` directory.
 
     $ cd /usr/local
     $ git clone git://github.com/n1k0/chromium-updater.git getchromium
