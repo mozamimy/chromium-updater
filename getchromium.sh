@@ -15,7 +15,7 @@ BASE_URL="http://build.chromium.org/buildbot/snapshots/chromium-rel-mac"
 ARCHIVE_NAME="chrome-mac.zip"
 LATEST_URL="$BASE_URL/LATEST"
 LATEST_VERSION=`curl -s -f $LATEST_URL` || die "Unable to fetch latest version number"
-PROC=`ps aux|grep -i Chromium|grep -iv grep|grep -iv getchromium|wc -l|awk '{print $1}'` || die "Unable to count running Chromium processes"
+PROC=`ps aux|grep -i Chromium|grep -iv grep|grep -iv $0|wc -l|awk '{print $1}'` || die "Unable to count running Chromium processes"
 INSTALL_DIR="/Applications"
 
 # The script should never be run by root
