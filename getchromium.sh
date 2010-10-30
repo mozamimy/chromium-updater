@@ -17,6 +17,8 @@ LATEST_URL="$BASE_URL/LATEST"
 LATEST_VERSION=`curl -s -f $LATEST_URL` || die "Unable to fetch latest version number"
 PROC=`ps aux|grep -i Chromium|grep -iv grep|grep -iv $0|wc -l|awk '{print $1}'` || die "Unable to count running Chromium processes"
 INSTALL_DIR="/Applications"
+# Using Chromium's Info.plist to get the SVN Revision.
+INSTALLED_VERSION=`defaults read $INSTALL_DIR/Chromium.app/Contents/Info SVNRevision`
 
 # The script should never be run by root
 if [[ $W == "root" ]]; then
@@ -24,11 +26,8 @@ if [[ $W == "root" ]]; then
 fi
 
 # Checking if latest available build version number is newer than installed one
-if [[ -f $TMP/current-chromium-version ]]; then
-  INSTALLED_VERSION=`cat $TMP/current-chromium-version`
-  if [[ $LATEST_VERSION -eq $INSTALLED_VERSION ]]; then
-    die "You already have the latest build ($LATEST_VERSION) installed"
-  fi
+if [[ $LATEST_VERSION -eq $INSTALLED_VERSION ]]; then
+  die "You already have the latest build ($LATEST_VERSION) installed"
 fi
 
 # Testing if Chromium is currently running
@@ -56,11 +55,7 @@ mv -f $TMP/chromium-$LATEST_VERSION/chrome-mac/Chromium.app $INSTALL_DIR || die 
 echo "Chromium build $LATEST_VERSION succesfully installed"
 
 # Cleaning
-rm -r $TMP/chromium-$LATEST_VERSION
 rm $TMP/chromium-$LATEST_VERSION.zip
-
-# Updating log
-echo $LATEST_VERSION > $TMP/current-chromium-version
 
 # Open Chromium
 open $INSTALL_DIR/Chromium.app
