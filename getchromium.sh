@@ -11,7 +11,7 @@ die() {
 
 W=`whoami`
 TMP="/tmp"
-BASE_URL="http://build.chromium.org/f/chromium/snapshots/chromium-rel-mac/"
+BASE_URL="http://build.chromium.org/f/chromium/snapshots/Mac/"
 ARCHIVE_NAME="chrome-mac.zip"
 LATEST_URL="$BASE_URL/LATEST"
 LATEST_VERSION=`curl -s -f $LATEST_URL` || die "Unable to fetch latest version number"
