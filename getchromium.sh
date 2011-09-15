@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script will try to upgrade to latest OSX Chromium build on your system via the 
+# This script will try to upgrade to latest OSX Chromium build on your system via the
 # command line (right, that means you'll have to open a term and run it from there)
 #
 # See README for further informations
@@ -11,10 +11,10 @@ die() {
 
 W=`whoami`
 TMP="/tmp"
-BASE_URL="http://build.chromium.org/f/chromium/snapshots/Mac/"
+BASE_URL="http://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac"
 ARCHIVE_NAME="chrome-mac.zip"
-LATEST_URL="$BASE_URL/LATEST"
-LATEST_VERSION=`curl -s -f $LATEST_URL` || die "Unable to fetch latest version number"
+LATEST_URL="$BASE_URL/LAST_CHANGE"
+LATEST_VERSION=`curl -s -f $LATEST_URL` || die "Unable to fetch latest version number from $LATEST_URL"
 PROC=`ps aux|grep -i Chromium|grep -iv grep|grep -iv $0|wc -l|awk '{print $1}'` || die "Unable to count running Chromium processes"
 INSTALL_DIR="/Applications"
 # Using Chromium's Info.plist to get the SVN Revision.
@@ -31,14 +31,15 @@ if [[ $LATEST_VERSION -eq $INSTALLED_VERSION ]]; then
 fi
 
 # Testing if Chromium is currently running
-if [[ ! $PROC -eq 0 ]]; then 
+if [[ ! $PROC -eq 0 ]]; then
   die "You must quit Chromium in order to install a new version"
 fi
 
 # Fetching latest archive if not already existing in tmp dir
 if [[ ! -f $TMP/chromium-$LATEST_VERSION.zip ]]; then
-  echo "Fetching chromium build $LATEST_VERSION, please wait..."
-  curl -O "$BASE_URL/$LATEST_VERSION/$ARCHIVE_NAME" || die "Unable to fetch version $LATEST_VERSION archive"
+  ARCHIVE_URL="$BASE_URL/$LATEST_VERSION/$ARCHIVE_NAME"
+  echo "Fetching chromium build $LATEST_VERSION from $ARCHIVE_URL, please wait..."
+  curl -O -L $ARCHIVE_URL || die "Unable to fetch version $LATEST_VERSION archive"
   mv $ARCHIVE_NAME $TMP/chromium-$LATEST_VERSION.zip || die "Unable to move downloaded archive to $TMP directory"
 fi
 
