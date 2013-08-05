@@ -10,19 +10,19 @@ die() {
 }
 
 W="$(whoami)"
-TMP="/tmp"
-BASE_URL="http://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac"
-ARCHIVE_NAME="chrome-mac.zip"
+TMP='/tmp'
+BASE_URL='http://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac'
+ARCHIVE_NAME='chrome-mac.zip'
 LATEST_URL="${BASE_URL}/LAST_CHANGE"
-LATEST_VERSION="$(curl -s -f $LATEST_URL)" || die "Unable to fetch latest version number from $LATEST_URL"
-PROC="$(ps aux|grep -i Chromium|grep -iv grep|grep -iv $0|wc -l|awk '{print $1}')" || die "Unable to count running Chromium processes"
-INSTALL_DIR="/Applications"
+LATEST_VERSION="$(curl -s -f "$LATEST_URL")" || die "Unable to fetch latest version number from ${LATEST_URL}"
+PROC="$(ps aux | grep -i 'Chromium' | grep -iv 'grep' | grep -iv "$0" | wc -l | awk '{print $1}')" || die "Unable to count running Chromium processes"
+INSTALL_DIR='/Applications'
 # Using Chromium's Info.plist to get the SVN Revision.
-INSTALLED_VERSION="$(defaults read ${INSTALL_DIR}/Chromium.app/Contents/Info SVNRevision 2>/dev/null)"
+INSTALLED_VERSION="$(defaults read "${INSTALL_DIR}/Chromium.app/Contents/Info" 'SVNRevision' 2> /dev/null)"
 
 # The script should never be run by root
-if [ "$W" = "root" ]; then
-  die "This script cannot be run as root"
+if [ "$W" = 'root' ]; then
+  die 'This script cannot be run as root'
 fi
 
 # Checking if latest available build version number is newer than installed one
@@ -32,7 +32,7 @@ fi
 
 # Testing if Chromium is currently running
 if [ "$PROC" -ne 0 ]; then
-  die "You must quit Chromium in order to install a new version"
+  die 'You must quit Chromium in order to install a new version'
 fi
 
 # Fetching latest archive if not already existing in tmp dir
@@ -48,11 +48,11 @@ unzip -qq -u -d "${TMP}/chromium-${LATEST_VERSION}" "${TMP}/chromium-${LATEST_VE
 
 # Deleting previously installed version
 if [ -d "${INSTALL_DIR}/Chromium.app" ]; then
-  rm -rf "${INSTALL_DIR}/Chromium.app" || die "Unable to delete previous installed version of Chromium"
+  rm -rf "${INSTALL_DIR}/Chromium.app" || die 'Unable to delete previous installed version of Chromium'
 fi
 
 # Installing new version
-mv -f "${TMP}/chromium-${LATEST_VERSION}/chrome-mac/Chromium.app" "${INSTALL_DIR}" || die "Unable to install fetched Chromium version"
+mv -f "${TMP}/chromium-${LATEST_VERSION}/chrome-mac/Chromium.app" "${INSTALL_DIR}" || die 'Unable to install fetched Chromium version'
 printf "Chromium build ${LATEST_VERSION} succesfully installed\n"
 
 # Cleaning
