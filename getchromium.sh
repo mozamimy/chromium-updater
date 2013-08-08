@@ -15,7 +15,7 @@ BASE_URL='http://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac
 ARCHIVE_NAME='chrome-mac.zip'
 LATEST_URL="${BASE_URL}/LAST_CHANGE"
 LATEST_VERSION="$(curl -s -f "$LATEST_URL")" || die "Unable to fetch latest version number from ${LATEST_URL}"
-PROC="$(ps aux | grep -i 'Chromium' | grep -iv 'grep' | grep -iv "$0" | wc -l | awk '{print $1}')" || die "Unable to count running Chromium processes"
+PROC="$(ps aux | grep -i 'Chromium' | grep -iv 'grep' | grep -iv "$0" | wc -l | awk '{print $1}')" || die 'Unable to count running Chromium processes'
 INSTALL_DIR='/Applications'
 # Using Chromium's Info.plist to get the SVN Revision.
 INSTALLED_VERSION="$(defaults read "${INSTALL_DIR}/Chromium.app/Contents/Info" 'SVNRevision' 2> /dev/null)"
