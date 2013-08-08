@@ -17,7 +17,7 @@ LATEST_URL="${BASE_URL}/LAST_CHANGE"
 LATEST_VERSION="$(curl -s -f "$LATEST_URL")" || die "Unable to fetch latest version number from ${LATEST_URL}"
 PROC="$(ps aux | grep -i 'Chromium' | grep -iv 'grep' | grep -iv "$0" | wc -l | awk '{print $1}')" || die 'Unable to count running Chromium processes'
 INSTALL_DIR='/Applications'
-# Using Chromium's Info.plist to get the SVN Revision.
+# Using Chromium's Info.plist to get the SCM Revision.
 INSTALLED_VERSION="$(defaults read "${INSTALL_DIR}/Chromium.app/Contents/Info" 'SCMRevision' 2> /dev/null)"
 
 # The script should never be run by root
