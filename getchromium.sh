@@ -10,7 +10,7 @@ die() {
 }
 
 W="$(whoami)"
-TMP='/tmp'
+TMP="${TMPDIR-/tmp}"
 BASE_URL='http://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac'
 ARCHIVE_NAME='chrome-mac.zip'
 LATEST_URL="${BASE_URL}/LAST_CHANGE"
