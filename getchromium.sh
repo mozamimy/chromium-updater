@@ -11,10 +11,6 @@ die() {
     exit 1
 }
 
-ARGV="$(getopt 'o' "$@")"
-
-eval set -- "$ARGV"
-
 W="$(whoami)"
 TMP="${TMPDIR-/tmp}"
 #BASE_URL='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac'
@@ -73,4 +69,6 @@ printf 'Chromium build %s succesfully installed\n' "$LATEST_VERSION"
 rm "${TMP}/chromium-${LATEST_VERSION}.zip"
 
 # Open Chromium
-#open "${INSTALL_DIR}/Chromium.app"
+if [ "$1" = '--open' ]; then
+    open "${INSTALL_DIR}/Chromium.app"
+fi
