@@ -13,8 +13,7 @@ die() {
 
 W="$(whoami)"
 TMP="${TMPDIR-/tmp}"
-#BASE_URL='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac'
-BASE_URL='https://storage.googleapis.com/chromium-qa/Chromium_Mac_10_8_x64__experimental_'
+BASE_URL='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac'
 ARCHIVE_NAME='chrome-mac.zip'
 LATEST_URL="${BASE_URL}/LAST_CHANGE"
 LATEST_VERSION="$(curl -s -f "$LATEST_URL")" || die 'Unable to fetch latest version number from %s' "$LATEST_URL"
