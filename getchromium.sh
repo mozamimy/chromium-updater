@@ -35,7 +35,7 @@ if [ "$W" == 'root' ]; then
 fi
 
 # Checking if latest available build version number is newer than installed one
-if [ "$LATEST_VERSION" >= "$INSTALLED_VERSION" ]; then
+if (( "$LATEST_VERSION" >= "$INSTALLED_VERSION" )); then
   die 'You already have the latest build (%s) installed' "$LATEST_VERSION"
 fi
 
