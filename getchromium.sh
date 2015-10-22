@@ -30,17 +30,17 @@ printf 'Chromium version installed: %s\n' "$INSTALLED_VERSION"
 printf 'Latest Chromium version   : %s\n' "$LATEST_VERSION"
 
 # The script should never be run by root
-if [ "$W" = 'root' ]; then
+if [ "$W" == 'root' ]; then
   die 'This script cannot be run as root'
 fi
 
 # Checking if latest available build version number is newer than installed one
-if [ "$LATEST_VERSION" -le "$INSTALLED_VERSION" ]; then
+if (( "$LATEST_VERSION" <= "$INSTALLED_VERSION" )); then
   die 'You already have the latest build (%s) installed' "$LATEST_VERSION"
 fi
 
 # Testing if Chromium is currently running
-if [ "$PROC" -ne 0 ]; then
+if [ "$PROC" != 0 ]; then
   die 'You must quit Chromium in order to install a new version'
 fi
 
@@ -68,6 +68,6 @@ printf 'Chromium build %s succesfully installed\n' "$LATEST_VERSION"
 rm "${TMP}/chromium-${LATEST_VERSION}.zip"
 
 # Open Chromium
-if [ "$1" = '--open' ]; then
+if [ "$1" == '--open' ]; then
     open "${INSTALL_DIR}/Chromium.app"
 fi
